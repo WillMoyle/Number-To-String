@@ -23,29 +23,44 @@ protected: // protected functions and parameters used by unit test child class
     
     double input;
     std::string output;
-    // Returns full string representation of double parameter
-    std::string convertToOutput();
     
+    // Returns full string representation of double 'input' member variable
+    std::string convertToOutput();
+
 private:
     
+    // Prints a welcome message to the console
     void welcomeMessage();
+    
+    // Prints a final message to the console
     void finalMessage();
+    
+    // Recieves input as a string and returns it as a double (if valid)
     double receiveInput();
+    
+    // Prints the output of the conversion to the console
     void printOutput();
+    
+    // Returns true if user wishes to convert another number
     bool repeat();
     
-    
+    // Returns string representations of integers between 0 and 999
     std::string convertThreeDigits(int number);
+    
+    // Takes integers from 0 to 9 returns as string
     std::string convertTwoDigits(int number);
     std::string convertOneDigit(int number);
     std::string convertTeens(int number);
-    bool stringIsNumber(std::string word);
     
-
+    // Returns true if the given string represents a valid decimal number
+    bool stringIsNumber(std::string word);
     
 public:
     Converter();
     ~Converter();
+    
+    // Handles the main flow of control for the Converter class, including I/O
+    // TO BE CALLED IN MAIN FILE AFTER CONSTRUCTOR
     void run();
     
 };

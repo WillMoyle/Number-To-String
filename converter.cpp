@@ -5,7 +5,7 @@
  CONVERTER CLASS FUNCTION DEFINITIONS FILE */
 
 #include "converter.h"
-
+#include <iomanip>
 
 ////////////////////////////////////////////////////////////////////////////////
 // CONVERTING NUMBER TO STRING
@@ -14,13 +14,13 @@
 
 
 // FUNCTION: convertToOutput
-// Returns full string representation of double parameter
+// Returns full string representation of double 'input' member variable
 std::string Converter::convertToOutput() {
     std::string returnVal = "";
     double absInput = input;
     
     // Check if number is negative
-    if (input < 0) {
+    if (input <= -0.01) {
         returnVal += "negative ";
         absInput = -input;
     }
@@ -28,8 +28,8 @@ std::string Converter::convertToOutput() {
     // Separate number into dollars and cents
     long wholeDollars = absInput;
     int cents = float((absInput - wholeDollars) * 100.0);
-        
-    // Separate dollars into units, thousands, millions & billions
+    
+    // Separate dollars into units, thousands, millions, billions and trillions
     std::string multipliers[] = {" trillion ", " billion ", " million ",
         " thousand ", ""};
     long multVals[] = {(wholeDollars) / pow(10,12),
@@ -47,16 +47,21 @@ std::string Converter::convertToOutput() {
     
     // Special case when the value is zero
     if (wholeDollars == 0 && cents == 0)
-        returnVal += "Zero";
+        returnVal += "zero";
     
     // Add text to string for cents
-    if (cents > 0 && wholeDollars > 0)
-        returnVal += " and ";
+    if (cents > 0 && wholeDollars > 0) {
+        if (multVals[4] != 0)
+            returnVal += " ";
+        returnVal += "and ";
+    }
     if (cents >= 10)
         returnVal += std::to_string(cents) + "/100";
     else if (cents > 0)
         returnVal += "0" + std::to_string(cents) + "/100";
-    returnVal += " dollar";
+    if (!(wholeDollars > 0 && cents == 0 && multVals[4] == 0))
+        returnVal += " ";
+    returnVal += "dollar";
     
     // Add 's' if value is not exactly 1
     if (!(wholeDollars == 1 && cents == 0)) returnVal += "s";
@@ -78,7 +83,7 @@ std::string Converter::convertThreeDigits(int number) {
     if (number < 0 || number > 999)
         return NULL;
     
-    // extract digits
+    // extract number of hundreds, tens and single digits
     int hundred = number / 100;
     int ten = (number - (100 * hundred)) / 10;
     int digit = (number - (100 * hundred) - (10 * ten));
@@ -95,13 +100,16 @@ std::string Converter::convertThreeDigits(int number) {
     }
     
     // create string for tens and digits
+    // CASE 1: Number >= 20
     if (ten >= 2) {
         returnVal += convertTwoDigits(ten);
         if (digit >= 1)
             returnVal += "-" + convertOneDigit(digit);
     }
+    // CASE 2: 10 <= Number < 20
     else if (ten == 1)
         returnVal += convertTeens(digit);
+    // CASE 3: 0 <= Number < 10
     else if (digit >= 1)
         returnVal += convertOneDigit(digit);
     
@@ -112,15 +120,15 @@ std::string Converter::convertThreeDigits(int number) {
 
 
 // FUNCTIONS: digit conversions
-// Returns numbers as their teen, tens or single digit string values
+// Takes integers from 0 to 9 returns as string
 std::string Converter::convertTeens(int digit) {
     std::string teens[10] = {"ten", "eleven", "twelve", "thirteen", "fourteen",
-        "fifteen", "sixteen", "seventeen", "eighteen", "ninteen"};
+        "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};
     return teens[digit];
 }
 std::string Converter::convertTwoDigits(int number) {
     std::string tens[10] = {"", "", "twenty", "thirty", "forty", "fifty",
-        "sixty", "seventy", "eighty", "ninty"};
+        "sixty", "seventy", "eighty", "ninety"};
     return tens[number];
 }
 std::string Converter::convertOneDigit(int number) {
@@ -205,7 +213,12 @@ double Converter::receiveInput() {
     
     return inputValue;
 }
+// END OF FUNCTION
 
+
+
+// FUNCTION: printOutput
+// Prints the output of the conversion to the console
 void Converter::printOutput() {
     std::cout << "\nOUTPUT:\n" << output << std::endl;
 }
@@ -220,12 +233,15 @@ bool Converter::repeat() {
     std::cout << "\nDo you wish to input another number? (Y/N) ";
     std::getline(std::cin, userInput);
     
-    while (userInput.compare("Y") && userInput.compare("N")) {
+    while (userInput.compare("Y") && userInput.compare("N")
+           && userInput.compare("y") && userInput.compare("n")) {
         std::cout << "\nInvalid input. Please enter 'Y' or 'N': ";
         std::getline(std::cin, userInput);
     }
     
-    return userInput.compare("N");
+    if (!userInput.compare("N") || !userInput.compare("n"))
+        return false;
+    return true;
 }
 // END OF FUNCTION
 
@@ -247,7 +263,7 @@ void Converter::finalMessage() {
 
 
 // FUNCTION: stringIsNumber
-// Returns true if the given string represents a valide decimal number
+// Returns true if the given string represents a valid decimal number
 bool Converter::stringIsNumber(std::string word) {
     int len = word.length();
     if (len == 0)

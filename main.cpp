@@ -1,6 +1,6 @@
 /* Number to String Converter
 Author: Will Moyle
-Last Modified: 5 January 2015
+Last Modified: 6 January 2015
  
 MAIN FILE
 
@@ -10,17 +10,23 @@ into its string representation
 For example: 
 2523.04 to "Two thousand five hundred twenty-three and 04/100 dollars" */
 
-#include "converter.h"
-//#include "converterunittest.h"
+
+
+#include "converterunittest.h"
 
 int main() {
     
-    // Create an instance of the Converter class, automatically runs conversions
-    Converter converter;
-    converter.run();
+    // Set to true if the program should perform unit tests
+    bool performUnitTests = false;
     
-    // Uncomment below code (and above include statement) to run unit tests
-    //ConverterUnitTest converterUnitTest(0);
+    if (!performUnitTests) {
+        // Create an instance of the Converter class and run conversion
+        Converter converter;
+        converter.run();
+    }
+    else
+        // Perform unit tests, if required
+        ConverterUnitTest converterUnitTest;
     
     return 0;
 }
