@@ -1,6 +1,6 @@
 /* Number to String Converter
  Author: Will Moyle
- Last Modified: 5 January 2015
+ Last Modified: 6 January 2015
  
  CONVERTER CLASS HEADER FILE
  
@@ -18,20 +18,30 @@
 #include <cmath>
 
 class Converter {
+
+protected: // protected functions and parameters used by unit test child class
+    
+    double input;
+    std::string output;
+    // Returns full string representation of double parameter
+    std::string convertToOutput();
+    
+private:
+    
     void welcomeMessage();
     void finalMessage();
     double receiveInput();
     void printOutput();
     bool repeat();
+    
+    
     std::string convertThreeDigits(int number);
     std::string convertTwoDigits(int number);
     std::string convertOneDigit(int number);
     std::string convertTeens(int number);
+    bool stringIsNumber(std::string word);
     
-protected:
-    double input;
-    std::string output;
-    std::string convertToOutput();
+
     
 public:
     Converter();
