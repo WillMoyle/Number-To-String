@@ -15,6 +15,7 @@
 
 #include <iostream>
 #include <string>
+#include <cmath>
 
 class Converter {
     double input;
@@ -26,6 +27,10 @@ class Converter {
     std::string* convertToOutput();
     void printOutput();
     bool repeat();
+    std::string convertThreeDigits(int number);
+    std::string convertTwoDigits(int number);
+    std::string convertOneDigit(int number);
+    std::string convertTeens(int number);
     
 public:
     

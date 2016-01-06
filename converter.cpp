@@ -18,14 +18,93 @@ void Converter::finalMessage() {
 
 
 double Converter::receiveInput() {
-    return 2523.04;
+    float inputValue;
+    std::cout << "\n\nINPUT:\nPlease enter a valid number: ";
+    std::cin >> inputValue;
+    return inputValue;
 }
 
 std::string* Converter::convertToOutput() {
-    
     std::string* returnVal = new std::string;
+    *returnVal = "";
     
-    *returnVal = "Hello world";
+    if (input < 0)
+        *returnVal += "Negative ";
+    
+    int wholeDollars = trunc(input);
+    int cents = std::abs((input - wholeDollars) * 100);
+    
+    
+    *returnVal += convertThreeDigits(wholeDollars);
+    
+    
+    std::cout << "\nWhole: " << wholeDollars;
+    std::cout << "\nCents: " << cents;
+    
+    if (wholeDollars != 0 && cents != 0)
+        *returnVal += " and ";
+    
+    if (cents >= 10)
+        *returnVal += std::to_string(cents) + "/100";
+    else if (cents != 0)
+        *returnVal += "0" + std::to_string(cents) + "/100";
+    
+    *returnVal += " dollars";
+    
+    return returnVal;
+}
+
+std::string Converter::convertThreeDigits(int number) {
+    if (number < 0 || number > 999)
+        return NULL;
+    
+    int hundred = number / 100;
+    int ten = (number - (100 * hundred)) / 10;
+    int digit = (number - (100 * hundred) - (10 * ten));
+    
+    std::string returnVal = "";
+    
+    returnVal += convertOneDigit(hundred);
+    if (hundred > 0 && (ten > 0 || digit > 0))
+        returnVal += " and ";
+    else if (hundred > 0 && ten == 0 && digit == 0)
+        returnVal += 
+    
+    if (ten >= 2) {
+        returnVal += convertTwoDigits(ten) + "-";
+        returnVal += convertOneDigit(digit);
+    }
+    else if (ten == 1)
+        returnVal += convertTeens(digit);
+    else
+        returnVal += convertOneDigit(digit);
+    
+    return returnVal;
+}
+
+std::string Converter::convertTeens(int digit) {
+    std::string teens[10] = {"ten", "eleven", "twelve", "thirteen", "fourteen",
+        "fifteen", "sixteen", "seventeen", "eighteen", "ninteen"};
+    
+    std::string returnVal = teens[digit];
+    
+    return returnVal;
+}
+
+std::string Converter::convertTwoDigits(int number) {
+    std::string tens[10] = {"", "", "twenty", "thirty", "forty", "fifty", "sixty",
+        "seventy", "eighty", "ninty"};
+    
+    std::string returnVal = tens[number];
+    
+    return returnVal;
+}
+
+std::string Converter::convertOneDigit(int number) {
+    std::string digits[10] = {"zero", "one", "two", "three", "four", "five", "six",
+        "seven", "eight", "nine"};
+    
+    std::string returnVal = digits[number];
     
     return returnVal;
 }
