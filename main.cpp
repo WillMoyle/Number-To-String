@@ -14,11 +14,8 @@ For example:
 
 int main() {
     
-    // Create an instance of the Converter class
+    // Create an instance of the Converter class, automatically runs conversions
     Converter converter;
-    
-    // Run main converter function in the console
-    converter.run();
     
     return 0;
 }

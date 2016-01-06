@@ -14,13 +14,23 @@
 #define converter_h
 
 #include <iostream>
+#include <string>
 
 class Converter {
+    double input;
+    std::string* output;
+    
+    void welcomeMessage();
+    void finalMessage();
+    double receiveInput();
+    std::string* convertToOutput();
+    void printOutput();
+    bool repeat();
     
 public:
     
-    void run();
-    
+    Converter();
+    ~Converter();
 };
 
 #endif
