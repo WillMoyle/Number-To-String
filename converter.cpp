@@ -5,7 +5,6 @@
  CONVERTER CLASS FUNCTION DEFINITIONS FILE */
 
 #include "converter.h"
-#include <iomanip>
 
 ////////////////////////////////////////////////////////////////////////////////
 // CONVERTING NUMBER TO STRING

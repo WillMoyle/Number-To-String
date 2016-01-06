@@ -1,4 +1,4 @@
-OBJ = main.o converter.o
+OBJ = main.o converter.o converterunittest.o
 EXEC = converter
 TAGS = g++ -Wall -g
 

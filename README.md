@@ -14,11 +14,11 @@ Numbers can be in the range of plus/minus 10 trillion (including 2 decimal place
 
 **File structure**
 
-All functions for this conversion are found within the *Converter* class in the files *converter.h* and *converter.cpp*
+All functions for this conversion are found within the *Converter* class in the files *converter.h* and *converter.cpp*.
 
 **Unit tests**
 
-Additionally, a *ConverterUnitTest* class can be found in *converterunittest.h* which is a child class of *Converter* and tests a number of cases. The variable *performUnitTests* in *main.cpp* should be set to *true* in order to perform unit tests.
+Additionally, a *ConverterUnitTest* class can be found in *converterunittest.h* and *converterunittest.cpp* which is a child class of *Converter* and tests a number of cases. The variable *performUnitTests* in *main.cpp* should be set to *true* in order to perform unit tests.
 
 **Assumptions & Justification**
 
