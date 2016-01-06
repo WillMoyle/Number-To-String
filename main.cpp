@@ -11,11 +11,12 @@ For example:
 2523.04 to "Two thousand five hundred twenty-three and 04/100 dollars" */
 
 #include "converter.h"
+#include "converterunittest.h"
 
 int main() {
     
     // Create an instance of the Converter class, automatically runs conversions
-    Converter converter;
+    ConverterUnitTest converterUnitTest(0);
     
     return 0;
 }

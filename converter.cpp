@@ -24,32 +24,31 @@ double Converter::receiveInput() {
     return inputValue;
 }
 
-std::string* Converter::convertToOutput() {
-    std::string* returnVal = new std::string;
-    *returnVal = "";
+std::string Converter::convertToOutput() {
+    std::string returnVal = "";
     
-    if (input < 0)
-        *returnVal += "Negative ";
+    if (input < 0) {
+        returnVal += "Negative ";
+        input = -input;
+    }
+    
     
     int wholeDollars = trunc(input);
-    int cents = std::abs((input - wholeDollars) * 100);
+    int cents = float((input - wholeDollars) * 100.0);
     
-    
-    *returnVal += convertThreeDigits(wholeDollars);
-    
-    
-    std::cout << "\nWhole: " << wholeDollars;
-    std::cout << "\nCents: " << cents;
+    returnVal += convertThreeDigits(wholeDollars);
     
     if (wholeDollars != 0 && cents != 0)
-        *returnVal += " and ";
+        returnVal += "and ";
+    else if (wholeDollars == 0 && cents == 0)
+        returnVal += "Zero ";
     
     if (cents >= 10)
-        *returnVal += std::to_string(cents) + "/100";
-    else if (cents != 0)
-        *returnVal += "0" + std::to_string(cents) + "/100";
+        returnVal += std::to_string(cents) + "/100 ";
+    else if (cents > 0)
+        returnVal += "0" + std::to_string(cents) + "/100 ";
     
-    *returnVal += " dollars";
+    returnVal += "dollars";
     
     return returnVal;
 }
@@ -64,20 +63,23 @@ std::string Converter::convertThreeDigits(int number) {
     
     std::string returnVal = "";
     
-    returnVal += convertOneDigit(hundred);
-    if (hundred > 0 && (ten > 0 || digit > 0))
-        returnVal += " and ";
-    else if (hundred > 0 && ten == 0 && digit == 0)
-        returnVal += 
+    if (hundred > 0) {
+        returnVal += convertOneDigit(hundred);
+        if (ten > 0 || digit > 0)
+            returnVal += " hundred and ";
+        else if (ten == 0 && digit == 0)
+            returnVal += " hundred ";
+    }
     
     if (ten >= 2) {
-        returnVal += convertTwoDigits(ten) + "-";
-        returnVal += convertOneDigit(digit);
+        returnVal += convertTwoDigits(ten);
+        if (digit >= 1)
+            returnVal += "-" + convertOneDigit(digit) + " ";
     }
     else if (ten == 1)
-        returnVal += convertTeens(digit);
-    else
-        returnVal += convertOneDigit(digit);
+        returnVal += convertTeens(digit) + " ";
+    else if (digit >= 1)
+        returnVal += convertOneDigit(digit) + " ";
     
     return returnVal;
 }
@@ -110,7 +112,7 @@ std::string Converter::convertOneDigit(int number) {
 }
 
 void Converter::printOutput() {
-    std::cout << "\nOutput: " << *output << std::endl;
+    std::cout << "\nOutput: " << output << std::endl;
 }
 
 bool Converter::repeat() {
@@ -119,10 +121,15 @@ bool Converter::repeat() {
 
 
 Converter::Converter() {
-    bool loop = true;
-    
     // Print welcome message
     welcomeMessage();
+}
+
+Converter::~Converter() {
+}
+
+void Converter::run() {
+    bool loop = true;
     
     // Loop to allow for multiple conversions
     while (loop) {
@@ -139,8 +146,4 @@ Converter::Converter() {
     }
     
     finalMessage();
-}
-
-Converter::~Converter() {
-    delete output;
 }

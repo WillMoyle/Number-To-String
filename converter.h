@@ -18,13 +18,9 @@
 #include <cmath>
 
 class Converter {
-    double input;
-    std::string* output;
-    
     void welcomeMessage();
     void finalMessage();
     double receiveInput();
-    std::string* convertToOutput();
     void printOutput();
     bool repeat();
     std::string convertThreeDigits(int number);
@@ -32,10 +28,16 @@ class Converter {
     std::string convertOneDigit(int number);
     std::string convertTeens(int number);
     
-public:
+protected:
+    double input;
+    std::string output;
+    std::string convertToOutput();
     
+public:
     Converter();
     ~Converter();
+    void run();
+    
 };
 
 #endif
