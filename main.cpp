@@ -17,7 +17,7 @@ For example:
 int main() {
     
     // Set to true if the program should perform unit tests
-    bool performUnitTests = false;
+    bool performUnitTests = true	;
     
     if (!performUnitTests) {
         // Create an instance of the Converter class and run conversion
